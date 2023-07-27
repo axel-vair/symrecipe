@@ -3,4 +3,13 @@
 {% block title %}Symrecipe - Ingrédients{% endblock %}
 
 {% block body %}
+    <div class="container">
+        <h1>Mes ingrédients</h1>
+        {% for ingredient in ingredients %}
+            <div>
+                <p>{{ ingredient.name }} {{ ingredient.price }}</p>
+
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
