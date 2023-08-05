@@ -1,0 +1,54 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}Symrecipe - Recettes{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        {% if not recipe.items is same as ([]) %}
+            <h1>Mes recettes</h1>
+
+            <div class="count">
+                Il y a {{ recipe.getTotalItemCount }} recettes
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Edition</th>
+                    <th scope="col">Suppression</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for recipies in recipe %}
+                    <tr>
+                        <th scope="row">{{ recipe.id }}</th>
+                        <td>{{ recipe.name }}</td>
+                        <td>{{ recipe.price }}</td>
+                        <td>{{ recipe.createdAt|date('d/m/Y')  }}</td>
+                        <td>
+                            <a href="{{ path('ingredient.edit', {id: recipe.id}) }}" class="btn btn-info">Modifier</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('ingredient.delete', {id: recipe.id}) }}" class="btn btn-warning">Supprimer</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation d-flex justify-content-center">
+                {{ knp_pagination_render(recipe) }}
+            </div>
+        {% else %}
+            <div class="count">
+                Il n'y a pas d'ingrédient
+            </div>
+        {% endif %}
+    </div>
+    {# display navigation #}
+
+{% endblock %}

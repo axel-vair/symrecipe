@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\RecipeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
@@ -12,34 +13,52 @@ class Recipe
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 50)]
-    private ?string $name = null;
+    #[Assert\NotBlank()]
+    #[Assert\Length(
+        min: 2,
+        max:50,
+        minMessage: 'Le nom doit avoir au moins {{ limit }} caractères',
+        maxMessage : 'Le nom ne doit pas excéder {{ limit }} caractères',
+    )]
+    private ?string $name;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    #[Assert\Range(min: 60, max: 86400 )]
     private ?\DateTimeInterface $time = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\LessThan(50)]
     private ?int $serving = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(min: 1, max: 5)]
     private ?float $difficulty = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(min: 0, max: 1000)]
     private ?float $price = null;
 
     #[ORM\Column]
-    private ?bool $favorite = null;
+    private ?bool $favorite = false;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $created_at;
+
 
     #[ORM\Column]
     private ?\DateTimeImmutable $update_at = null;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->update_at = new \DateTimeImmutable();
+    }
 
     #[ORM\Column(length: 255)]
     private ?string $ingredients = null;
