@@ -1,0 +1,64 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}Symrecipe - Recettes {% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        {% if not recipes.items is same as ([]) %}
+            <h1>Mes recettes</h1>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Numéro</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Difficulté</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Edition</th>
+                    <th scope="col">Suppression</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for recipe in recipes %}
+                    <tr>
+                        <th scope="row">{{ recipe.id }}</th>
+                        <td>{{ recipe.name }}</td>
+                        <td>
+                            {% if recipe.price is null %}
+                                Non renseigné
+                            {% else %}
+                                {{ recipe.price }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if recipe.difficulty is null %}
+                                Non renseignée
+                            {% else %}
+                                {{ recipe.difficulty }}
+                            {% endif %}
+                        </td>
+                        <td>{{ recipe.createdAt|date('d/m/Y')  }}</td>
+                        <td>
+                            todo
+                        </td>
+                        <td>
+                            todo
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation d-flex justify-content-center">
+                {{ knp_pagination_render(recipes) }}
+            </div>
+        {% else %}
+            <div class="count">
+                Il n'y a pas de recettes
+            </div>
+        {% endif %}
+    </div>
+    {# display navigation #}
+
+{% endblock %}

@@ -77,4 +77,9 @@ class Ingredient
 
         return $this;
     }
+
+    public function __toStrong()
+    {
+        return $this->name;
+    }
 }

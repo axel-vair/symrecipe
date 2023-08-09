@@ -7,6 +7,14 @@
         {% if not ingredients.items is same as ([]) %}
         <h1>Mes ingrédients</h1>
 
+            {#  Display message flash when modify or suppress ingredient #}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+
             <div class="count">
                Il y a {{ ingredients.getTotalItemCount }} ingrédients
             </div>
