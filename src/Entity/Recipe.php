@@ -3,65 +3,80 @@
 namespace App\Entity;
 
 use App\Repository\RecipeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[UniqueEntity('name')]
+
 class Recipe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(type: 'string', length: 50)]
     #[Assert\NotBlank()]
-    #[Assert\Length(
-        min: 2,
-        max:50,
-        minMessage: 'Le nom doit avoir au moins {{ limit }} caractères',
-        maxMessage : 'Le nom ne doit pas excéder {{ limit }} caractères',
-    )]
+    #[Assert\Length(min: 2, max: 50)]
     private ?string $name;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    #[Assert\Range(min: 60, max: 86400 )]
-    private ?\DateTimeInterface $time = null;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Positive]
+    #[Assert\LessThan(1441)]
+    private ?int $time;
 
-    #[ORM\Column(nullable: true)]
-    #[Assert\LessThan(50)]
-    private ?int $serving = null;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Positive]
+    #[Assert\LessThan(51)]
+    private ?int $nbPeople;
 
-    #[ORM\Column(nullable: true)]
-    #[Assert\Range(min: 1, max: 5)]
-    private ?float $difficulty = null;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Positive]
+    #[Assert\LessThan(6)]
+    private ?int $difficulty;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
     private ?string $description = null;
 
-    #[ORM\Column(nullable: true)]
-    #[Assert\Range(min: 0, max: 1000)]
-    private ?float $price = null;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Assert\Positive]
+    #[Assert\LessThan(1000)]
+    private ?float $price;
 
-    #[ORM\Column]
-    private ?bool $favorite = false;
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $isFavorite;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at;
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\NotNull]
+    private ?\DateTimeImmutable $createdAt;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\NotNull]
+    private ?\DateTimeImmutable $updateAt;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $update_at = null;
+    #[ORM\ManyToMany(targetEntity: Ingredient::class)]
+    private Collection $ingredients;
 
     public function __construct()
     {
-        $this->created_at = new \DateTimeImmutable();
-        $this->update_at = new \DateTimeImmutable();
+        $this->ingredients = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updateAt = new \DateTimeImmutable();
     }
 
-    #[ORM\Column(length: 255)]
-    private ?string $ingredients = null;
+    #[ORM\PrePersist]
+    public function setUpdatedAtValue()
+    {
+        $this->updateAt = new \DateTimeImmutable();
+
+    }
 
     public function getId(): ?int
     {
@@ -80,36 +95,36 @@ class Recipe
         return $this;
     }
 
-    public function getTime(): ?\DateTimeInterface
+    public function getTime(): ?int
     {
         return $this->time;
     }
 
-    public function setTime(?\DateTimeInterface $time): static
+    public function setTime(?int $time): static
     {
         $this->time = $time;
 
         return $this;
     }
 
-    public function getServing(): ?int
+    public function getNbPeople(): ?int
     {
-        return $this->serving;
+        return $this->nbPeople;
     }
 
-    public function setServing(?int $serving): static
+    public function setNbPeople(?int $nbPeople): static
     {
-        $this->serving = $serving;
+        $this->nbPeople = $nbPeople;
 
         return $this;
     }
 
-    public function getDifficulty(): ?float
+    public function getDifficulty(): ?int
     {
         return $this->difficulty;
     }
 
-    public function setDifficulty(?float $difficulty): static
+    public function setDifficulty(?int $difficulty): static
     {
         $this->difficulty = $difficulty;
 
@@ -140,50 +155,62 @@ class Recipe
         return $this;
     }
 
-    public function isFavorite(): ?bool
+    public function isIsFavorite(): ?bool
     {
-        return $this->favorite;
+        return $this->isFavorite;
     }
 
-    public function setFavorite(bool $favorite): static
+    public function setIsFavorite(bool $isFavorite): static
     {
-        $this->favorite = $favorite;
+        $this->isFavorite = $isFavorite;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdateAt(): ?\DateTimeImmutable
     {
-        return $this->update_at;
+        return $this->updateAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $update_at): static
+    public function setUpdateAt(\DateTimeImmutable $updateAt): static
     {
-        $this->update_at = $update_at;
+        $this->updateAt = $updateAt;
 
         return $this;
     }
 
-    public function getIngredients(): ?string
+    /**
+     * @return Collection<int, Ingredient>
+     */
+    public function getIngredients(): Collection
     {
         return $this->ingredients;
     }
 
-    public function setIngredients(string $ingredients): static
+    public function addIngredient(Ingredient $ingredient): static
     {
-        $this->ingredients = $ingredients;
+        if (!$this->ingredients->contains($ingredient)) {
+            $this->ingredients->add($ingredient);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Ingredient $ingredient): static
+    {
+        $this->ingredients->removeElement($ingredient);
 
         return $this;
     }

@@ -55,7 +55,6 @@ class IngredientController extends AbstractController
             );
         }
 
-
         return $this->render('pages/ingredient/new.html.twig', [
             "form" => $form->createView()
         ]);
