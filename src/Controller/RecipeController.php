@@ -40,7 +40,7 @@ class RecipeController extends AbstractController
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
 
-        /**
+
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $recipe = $form->getData();
@@ -54,7 +54,6 @@ class RecipeController extends AbstractController
 
             return $this->redirectToRoute('recipe.index');
         }
-         **/
 
         return $this->render('pages/recipe/new.html.twig', [
             'form' => $form->createView()
