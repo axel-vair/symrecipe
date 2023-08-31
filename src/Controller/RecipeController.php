@@ -26,7 +26,7 @@ class RecipeController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
-        return $this->render('pages/recipe/login.html.twig', [
+        return $this->render('pages/recipe/index.html.twig', [
             'recipes' => $recipes
         ]);
     }

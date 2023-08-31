@@ -5,6 +5,14 @@
 {% block body %}
     <div class="container">
         <h1 class="mt-4">Formulaire de connexion</h1>
+
+        {#  Display message flash when user create account #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <form action="{{ path('security.login') }}" method="post">
             {% if error %}
                 <div class="alert alert-danger mt-4">
