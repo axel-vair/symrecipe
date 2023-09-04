@@ -15,6 +15,7 @@ class UserListener{
     public function prePersist(User $user){
         $this->encodePassword($user);
     }
+
     /**
      * Encode password based on plainpassword
      * @param User $user

@@ -78,13 +78,15 @@ class UserController extends AbstractController
         ]);
     }
 
+
+
     #[Route('/utilisateur/edition/mot-de-passe/{id}', name: 'user.edit.password', methods: ['GET', 'POST'])]
     public function editPassword(UserRepository $repository,
                                  int $id,
                                  Request $request,
                                  UserPasswordHasherInterface $hasher,
                                  EntityManagerInterface $manager
-                        ) : Response
+    ) : Response
     {
         $user = $repository->find($id);
         $form = $this->createForm(UserPasswordType::class);
