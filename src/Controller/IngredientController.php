@@ -29,7 +29,7 @@ class IngredientController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
-        return $this->render('/pages/ingredient/index.html.twig', [
+        return $this->render('pages/ingredient/index.html.twig', [
             'ingredients' => $ingredients
         ]);
     }
