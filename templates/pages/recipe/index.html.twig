@@ -14,6 +14,12 @@
                 </div>
             {% endfor %}
 
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
             <table class="table table-hover">
                 <thead>
                 <tr>
