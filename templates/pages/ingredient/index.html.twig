@@ -6,6 +6,7 @@
     <div class="container mt-4">
         {% if not ingredients.items is same as ([]) %}
         <h1>Mes ingrédients</h1>
+            <a href="{{ path('ingredient.new') }}" class="btn btn-primary mb-4 mt-2">Créer un ingrédient</a>
 
             {#  Display message flash when modify or suppress ingredient #}
             {% for message in app.flashes('success') %}
@@ -13,11 +14,6 @@
                     {{ message }}
                 </div>
             {% endfor %}
-
-
-            <div class="count">
-               Il y a {{ ingredients.getTotalItemCount }} ingrédients
-            </div>
 
         <table class="table table-hover">
             <thead>
