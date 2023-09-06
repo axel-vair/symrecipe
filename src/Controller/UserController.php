@@ -41,8 +41,17 @@ class UserController extends AbstractController
                          int $id,
                          Request $request,
                          EntityManagerInterface $manager,
-                         UserPasswordHasherInterface $hasher) : Response
+                         UserPasswordHasherInterface $hasher,
+                         User $userEntity) : Response
+
     {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('security.login');
+        }
+
+        if($this->getUser()->getId() !== $userEntity->getId()){
+            return $this->redirectToRoute('security.login');
+        }
         $user = $repository->find($id);
         $form = $this->createForm(UserType::class, $user);
 
@@ -85,9 +94,18 @@ class UserController extends AbstractController
                                  int $id,
                                  Request $request,
                                  UserPasswordHasherInterface $hasher,
-                                 EntityManagerInterface $manager
+                                 EntityManagerInterface $manager,
+                                User $userEntity
     ) : Response
     {
+
+        if(!$this->getUser()){
+            return $this->redirectToRoute('security.login');
+        }
+
+        if($this->getUser()->getId() !== $userEntity->getId()){
+            return $this->redirectToRoute('security.login');
+        }
         $user = $repository->find($id);
         $form = $this->createForm(UserPasswordType::class);
 

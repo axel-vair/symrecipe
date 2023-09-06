@@ -7,6 +7,8 @@
         {% if not recipes.items is same as ([]) %}
             <h1>Mes recettes</h1>
 
+            <a href="{{ path('recipe.new') }}" class="btn btn-primary mb-4 mt-2">Créer une recette</a>
+
             {#  Display message flash when modify or suppress recipe #}
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success mt-4">
