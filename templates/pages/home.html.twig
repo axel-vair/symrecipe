@@ -14,6 +14,21 @@
                 <a class="btn btn-primary btn-lg" href="{{ path('security.registration') }}" role="button">S'inscrire</a>
             </p>
         </div>
+
+        <div class="recipes">
+            <h2 class="mt-4 mb-4">Recettes de la communeauté</h2>
+            <div class="d-flex justify-content-between">
+                {% for recipe in recipes %}
+                    <div class="card border-primary mb-3" style="max-width: 20rem;">
+                        <div class="card-header"> <a href="{{ path('recipe.show', {id: recipe.id}) }}">Recette n°{{ recipe.id }}  </a></div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ recipe.name }}</h4>
+                            <p class="card-text">{{ recipe.description|slice(0,100) ~ '...' }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
 {%  endblock %}
