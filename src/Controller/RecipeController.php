@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RecipeController extends AbstractController
 {
@@ -35,6 +36,20 @@ class RecipeController extends AbstractController
     }
 
 
+    #[Route('/recette/publique', 'recipe.index.public', methods: ['GET'])]
+    public function indexPublic(PaginatorInterface $paginator,
+                                RecipeRepository $repository,
+                                Request $request) : Response {
+        $recipes = $paginator->paginate(
+            $repository->findPublicRecipe(null),
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+        return $this->render('pages/recipe/index_public.html.twig', [
+            'recipes' => $recipes
+        ]);
+    }
+
     #[Route('/recette/{id}', 'recipe.show', methods: ['GET'])]
     public function show(Recipe $recipe,
                         Recipe $recipeEntity) : Response {
@@ -43,7 +58,7 @@ class RecipeController extends AbstractController
             return $this->redirectToRoute('security.login');
         }
 
-        if($this->getUser()->getId() !== $recipeEntity->getUser()->getId()){
+        if($this->getUser()->getId() !== $recipeEntity->getUser()->getId() && $recipeEntity->isIsPublic() === false){
             return $this->redirectToRoute('recipe.index');
         }
 
