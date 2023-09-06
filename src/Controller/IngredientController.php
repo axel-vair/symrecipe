@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ingredient;
+use App\Entity\User;
 use App\Form\IngredientType;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,6 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 class IngredientController extends AbstractController
 {
@@ -21,7 +25,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient', 'ingredient.index', methods: ['GET'])]
-
+    #[IsGranted('ROLE_USER')]
     public function index(IngredientRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $ingredients = $paginator->paginate(
@@ -35,6 +39,7 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/ingredient/nouveau', 'ingredient.new', methods: ['GET','POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(
         Request $request,
         EntityManagerInterface $manager
@@ -72,11 +77,20 @@ class IngredientController extends AbstractController
      *  function edit(EntityManagerInterface $manager, Ingredient $ingredient)
      */
     #[Route('/ingredient/edition/{id}', 'ingredient.edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function edit(IngredientRepository $repository,
                          int $id, Request $request,
-                         EntityManagerInterface $manager
+                         EntityManagerInterface $manager,
+                        Ingredient $ingredientEntity
     ): Response
     {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('security.login');
+        }
+
+        if($this->getUser()->getId() !== $ingredientEntity->getUser()->getId()){
+            return $this->redirectToRoute('ingredient.index');
+        }
         $ingredient = $repository->findOneBy(["id" => $id]);
         $form = $this->createForm(IngredientType::class, $ingredient);
 

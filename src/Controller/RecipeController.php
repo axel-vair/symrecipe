@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recipe;
+use App\Entity\User;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 
@@ -15,12 +16,14 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class RecipeController extends AbstractController
 {
+
     #[Route('/recette', name: 'recipe.index', methods: ['GET'])]
     public function index(PaginatorInterface $paginator,
                           RecipeRepository   $repository,
                           Request            $request
     ): Response
     {
+
         $recipes = $paginator->paginate(
             $repository->findBy(['user' => $this->getUser()]),
             $request->query->getInt('page', 1), /*page number*/
@@ -64,9 +67,19 @@ class RecipeController extends AbstractController
     #[Route('/recette/edition/{id}', 'recipe.edit', methods: ['GET', 'POST'])]
     public function edit(RecipeRepository $repository,
                          int $id, Request $request,
-                         EntityManagerInterface $manager
+                         EntityManagerInterface $manager,
+                        Recipe $recipeEntity
     ): Response
     {
+
+        if(!$this->getUser()){
+            return $this->redirectToRoute('security.login');
+        }
+
+        if($this->getUser()->getId() !== $recipeEntity->getUser()->getId()){
+            return $this->redirectToRoute('recipe.index');
+        }
+
         $recipe = $repository->findOneBy(["id" => $id]);
         $form = $this->createForm(RecipeType::class, $recipe);
 
