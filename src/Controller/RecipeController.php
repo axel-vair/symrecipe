@@ -34,6 +34,24 @@ class RecipeController extends AbstractController
         ]);
     }
 
+
+    #[Route('/recette/{id}', 'recipe.show', methods: ['GET'])]
+    public function show(Recipe $recipe,
+                        Recipe $recipeEntity) : Response {
+
+        if(!$this->getUser()){
+            return $this->redirectToRoute('security.login');
+        }
+
+        if($this->getUser()->getId() !== $recipeEntity->getUser()->getId()){
+            return $this->redirectToRoute('recipe.index');
+        }
+
+        return $this->render('pages/recipe/show.html.twig', [
+            'recipe' => $recipe
+        ]);
+    }
+
     #[Route('/recette/creation', 'recipe.new', methods: ['GET', 'POST'])]
     public function new(
         Request                $request,
