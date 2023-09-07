@@ -6,7 +6,16 @@
 
 {% block body %}
     <div class="container">
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <h1 class="mt-4"> {{ recipe.name }}</h1>
+
+        <p>Moyenne de la recette : {{ recipe.average|number_format(1, '.', ',') }} / 5</p>
         <span class="badge bg-primary">Créée le : {{ recipe.createdAt|date('d/m/y ') }}</span>
         {% if recipe.time %}
         <p class="mt-4">Temps (minutes) : {{ recipe.time }}</p>
@@ -42,5 +51,10 @@
         {% for ingredient in recipe.ingredients %}
             <span class="badge bg-primary">{{ ingredient.name }}</span>
         {% endfor %}
+
+        <div class="mark mt-4">
+            {{ form(form) }}
+        </div>
     </div>
+
 {% endblock %}
