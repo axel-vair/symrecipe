@@ -47,7 +47,7 @@ class AppFixtures extends Fixture
 
         }
 
-        // Receipts
+        // Recipes
 
         for($i = 0; $i<25; $i++){
             $recipe = new Recipe();
@@ -58,6 +58,7 @@ class AppFixtures extends Fixture
                     ->setDifficulty(mt_rand(0, 1) == 1 ? mt_rand(1, 5) : null)
                     ->setDescription($this->faker->text(300))
                     ->setIsFavorite(mt_rand(0, 1) == 1 ? true : false)
+                    ->setIsPublic(mt_rand(0, 1) == 1 ? true : false)
                     ->setUser(($users[mt_rand(0, count($users) -1)]));
 
                 for($x = 0; $x < mt_rand(5, 15); $x++){

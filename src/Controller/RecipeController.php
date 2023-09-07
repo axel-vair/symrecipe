@@ -129,4 +129,20 @@ class RecipeController extends AbstractController
 
         return $this->redirectToRoute('recipe.index');
     }
+
+    #[Route('/recette/{id}', 'recipe.show', methods: ['GET'])]
+    public function show(Recipe $recipe,
+                         Request $request) : Response {
+
+        if(!$this->getUser()){
+            return $this->redirectToRoute('security.login');
+        }
+        if($this->getUser()->getId() !== $recipe->getUser()->getId()){
+            return $this->redirectToRoute('recipe.index');
+        }
+        return $this->render('pages/recipe/show.html.twig', [
+            'recipe' => $recipe
+        ]);
+    }
+
 }
