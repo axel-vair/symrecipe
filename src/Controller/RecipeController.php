@@ -20,7 +20,14 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RecipeController extends AbstractController
 {
-
+    /**
+     *
+     * This method display recipes and paginate with PaginatorInterface
+     * @param PaginatorInterface $paginator
+     * @param RecipeRepository $repository
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/recette', name: 'recipe.index', methods: ['GET'])]
     public function index(PaginatorInterface $paginator,
                           RecipeRepository   $repository,
@@ -39,19 +46,27 @@ class RecipeController extends AbstractController
     }
 
 
+    /**
+     * This method displays public recipes
+     * @param RecipeRepository $repository
+     * @return Response
+     */
     #[Route('/recette/publique', 'recipe.index.public', methods: ['GET'])]
-    public function indexPublic(PaginatorInterface $paginator,
-                                RecipeRepository $repository,
-                                Request $request) : Response {
-        $recipes = $paginator->paginate(
-            $repository->findPublicRecipe(null),
-            $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
-        );
-        return $this->render('pages/recipe/index_public.html.twig', [
+    public function indexPublic(RecipeRepository $repository) : Response {
+
+        $recipes = $repository->findBy(['isPublic' => true]);
+        return $this->render('pages/recipe/publicRecipe.html.twig', [
             'recipes' => $recipes
         ]);
     }
+
+
+    /**
+     * This method allow users to create a new recipe
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
 
     #[Route('/recette/{id}', 'recipe.show', methods: ['GET', 'POST'])]
     public function show(Recipe $recipe,
@@ -131,6 +146,16 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    /**
+     *
+     * This method allow users to edit their recipes
+     * @param RecipeRepository $repository
+     * @param int $id
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param Recipe $recipeEntity
+     * @return Response
+     */
     #[Route('/recette/edition/{id}', 'recipe.edit', methods: ['GET', 'POST'])]
     public function edit(RecipeRepository $repository,
                          int $id, Request $request,
@@ -169,6 +194,14 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    /**
+     *
+     * This method allow users to delete their recipes
+     * @param RecipeRepository $repository
+     * @param int $id
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/recette/suppression/{id}', 'recipe.delete', methods: ['GET'])]
     public function delete(RecipeRepository $repository,
                            int $id,
@@ -196,4 +229,29 @@ class RecipeController extends AbstractController
 
         return $this->redirectToRoute('recipe.index');
     }
+
+
+    /**
+     * This method displays recipe on their unique page
+     * @param Recipe $recipe
+     * @param Request $request
+     * @return Response
+     */
+    #[Route('/recette/{id}', 'recipe.show', methods: ['GET'])]
+    public function show(Recipe $recipe,
+                         Request $request,
+                         RecipeRepository $recipeEntity) : Response {
+
+
+        if(!$this->getUser()){
+            return $this->redirectToRoute('security.login');
+        }
+        if($this->getUser()->getId() !== $recipe->getUser()->getId() && $recipe->isIsPublic() === false){
+            return $this->redirectToRoute('recipe.index');
+        }
+        return $this->render('pages/recipe/show.html.twig', [
+            'recipe' => $recipe
+        ]);
+    }
+
 }
