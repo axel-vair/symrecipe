@@ -16,6 +16,7 @@
         </div>
 
         <div class="recipes">
+
             <h2 class="mt-4">Recettes de la communauté</h2>
             <div class="d-flex justify-content-between">
                 {% for recipe in recipes %}
@@ -26,6 +27,7 @@
                                {{ recipe.name }}
                             </h4>
                             <p class="card-text">{{ recipe.description|slice(0, 100) ~ '...' }}</p>
+
                         </div>
                     </div>
                 {% endfor %}

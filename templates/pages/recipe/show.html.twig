@@ -1,8 +1,10 @@
+
 {% extends "base.html.twig" %}
 
 {% block title %}
     SymRecipe -
     {{ recipe.name }}
+
 {% endblock %}
 
 {% block body %}
@@ -13,6 +15,7 @@
                 {{ message }}
             </div>
         {% endfor %}
+
 
         <h1 class="mt-4">{{ recipe.name }}</h1>
 

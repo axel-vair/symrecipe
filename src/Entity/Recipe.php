@@ -53,6 +53,10 @@ class Recipe
     #[ORM\Column(type: 'boolean')]
     private ?bool $isFavorite;
 
+    #[ORM\Column]
+    private ?bool $isPublic = null;
+
+
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotNull]
     private ?\DateTimeImmutable $createdAt;
@@ -68,16 +72,16 @@ class Recipe
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+
     #[ORM\Column]
     private ?bool $isPublic = false;
-
-
 
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->updateAt = new \DateTimeImmutable();
+        $this->marks = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
