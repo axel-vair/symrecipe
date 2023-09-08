@@ -16,6 +16,16 @@
 
         <h1 class="mt-4">{{ recipe.name }}</h1>
 
+        <p>
+            {% if recipe.average %}
+        <p>Note moyenne :
+            {{ recipe.average|number_format(1, '.', ',') }} / 5</p>
+    {% else %}
+        <p>Pas de notes</p>
+        {% endif %}
+
+           </p>
+
 
         <div>
 			<span class="badge bg-primary">Créée le
@@ -34,7 +44,7 @@
         <div class="mt-4">
             {% if recipe.time %}
                 <p>Difficulté :
-                    {{ recipe.difficulty }}/5</p>
+                    {{ recipe.difficulty }}</p>
             {% else %}
                 <p>Difficulté non renseigné</p>
             {% endif %}
@@ -68,6 +78,10 @@
             {% for ingredient in recipe.ingredients %}
                 <span class="badge bg-primary">{{ ingredient.name }}</span>
             {% endfor %}
+        </div>
+
+        <div class="mark mt-4">
+            {{ form(form) }}
         </div>
 
 
