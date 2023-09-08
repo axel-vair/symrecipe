@@ -35,8 +35,7 @@ class MarkType extends AbstractType
                     'class' => 'btn btn-primary mt-4'
                 ],
                 'label' => 'Noter la recette'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -53,6 +53,10 @@ class Recipe
     #[ORM\Column(type: 'boolean')]
     private ?bool $isFavorite;
 
+    #[ORM\Column]
+    private ?bool $isPublic = null;
+
+
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotNull]
     private ?\DateTimeImmutable $createdAt;
@@ -68,8 +72,10 @@ class Recipe
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+
     #[ORM\Column]
     private ?bool $isPublic = false;
+
 
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Mark::class, orphanRemoval: true)]
     private Collection $marks;
@@ -93,6 +99,7 @@ class Recipe
         $this->average = $total / count($marks);
         return $this->average;
     }
+
 
     public function __construct()
     {
