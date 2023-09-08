@@ -237,20 +237,51 @@ class RecipeController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/recette/{id}', 'recipe.show', methods: ['GET'])]
+    #[Route('/recette/{id}', 'recipe.show', methods: ['GET', 'POST'])]
     public function show(Recipe $recipe,
+                         Recipe $recipeEntity,
                          Request $request,
-                         RecipeRepository $recipeEntity) : Response {
+                         MarkRepository $markRepository,
+                         EntityManagerInterface $manager) : Response {
+
+        $mark = new Mark();
+        $form = $this->createForm(MarkType::class, $mark);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $mark->setUser($this->getUser())
+                ->setRecipe($recipe);
+            $existingMark = $markRepository->findOneBy([
+                'user' => $this->getUser(),
+                'recipe' => $recipe
+            ]);
+
+            if(!$existingMark){
+                $manager->persist($mark);
+            }else{
+                $existingMark->setMark(
+                    $form->getData()->getMark()
+                );
+            }
+            $manager->flush();
+            $this->addFlash(
+                'success',
+                'La note a bien été prise en compte.'
+            );
+            return $this->redirectToRoute('recipe.show', ['id' => $recipe->getId()]);
+        }
 
 
         if(!$this->getUser()){
             return $this->redirectToRoute('security.login');
         }
-        if($this->getUser()->getId() !== $recipe->getUser()->getId() && $recipe->isIsPublic() === false){
+
+        if($this->getUser()->getId() !== $recipeEntity->getUser()->getId() && $recipeEntity->isIsPublic() === false){
             return $this->redirectToRoute('recipe.index');
         }
+
         return $this->render('pages/recipe/show.html.twig', [
-            'recipe' => $recipe
+            'recipe' => $recipe,
+            'form' => $form->createView()
         ]);
     }
 
