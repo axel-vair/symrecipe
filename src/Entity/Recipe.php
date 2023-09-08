@@ -69,7 +69,9 @@ class Recipe
     private ?User $user = null;
 
     #[ORM\Column]
-    private ?bool $isPublic = null;
+    private ?bool $isPublic = false;
+
+
 
     public function __construct()
     {
