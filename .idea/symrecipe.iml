@@ -3,8 +3,8 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="App\Tests\" />
-      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/collections" />
@@ -157,6 +157,44 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring 2" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/process 2" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/runtime 2" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/egulias 2/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/fakerphp 2/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jms/metadata" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/masterminds 2/html5" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/monolog 2/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs 2/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io 2/manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io 2/version" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor 2/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor 2/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor 2/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpstan 2/phpdoc-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr 2/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr 2/container" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr 2/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr 2/link" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr 2/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/cli-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/code-unit" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/code-unit-reverse-lookup" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/complexity" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/environment" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/global-state" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/lines-of-code" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/object-reflector" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/recursion-context" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/resource-operations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/type" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian 2/version" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/theseer 2/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/twig 2/extra-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/twig 2/twig" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vich/uploader-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart 2/assert" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

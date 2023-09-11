@@ -164,6 +164,44 @@
       <path value="$PROJECT_DIR$/vendor/symfony/console 2" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring 2" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle 2" />
+      <path value="$PROJECT_DIR$/vendor/masterminds 2/html5" />
+      <path value="$PROJECT_DIR$/vendor/egulias 2/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/webmozart 2/assert" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor 2/reflection-common" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor 2/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor 2/type-resolver" />
+      <path value="$PROJECT_DIR$/vendor/psr 2/link" />
+      <path value="$PROJECT_DIR$/vendor/psr 2/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/psr 2/log" />
+      <path value="$PROJECT_DIR$/vendor/psr 2/container" />
+      <path value="$PROJECT_DIR$/vendor/psr 2/cache" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/phar-io 2/version" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/code-unit" />
+      <path value="$PROJECT_DIR$/vendor/twig 2/extra-bundle" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/environment" />
+      <path value="$PROJECT_DIR$/vendor/phar-io 2/manifest" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/comparator" />
+      <path value="$PROJECT_DIR$/vendor/twig 2/twig" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/version" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/type" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/lines-of-code" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/diff" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/cli-parser" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/complexity" />
+      <path value="$PROJECT_DIR$/vendor/sebastian 2/global-state" />
+      <path value="$PROJECT_DIR$/vendor/theseer 2/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/monolog 2/monolog" />
+      <path value="$PROJECT_DIR$/vendor/phpstan 2/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/vendor/fakerphp 2/faker" />
+      <path value="$PROJECT_DIR$/vendor/myclabs 2/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/jms/metadata" />
+      <path value="$PROJECT_DIR$/vendor/vich/uploader-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
