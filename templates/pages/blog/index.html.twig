@@ -1,0 +1,21 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Articles</h1>
+
+        {% if articles is empty %}
+            <p>Aucun article n'a été publié pour le moment.</p>
+        {% else %}
+            {% for article in articles %}
+                <article>
+                    <h2>{{ article.title }}</h2>
+                    <p>{{ article.content|slice(0, 200) }}</p>
+                    <a href="{{ path('show.article', {'id': article.id}) }}">Lire la suite</a>
+                </article>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

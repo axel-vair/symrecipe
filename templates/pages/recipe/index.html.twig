@@ -4,8 +4,10 @@
 
 {% block body %}
     <div class="container mt-4">
+        <h1>Mes recettes</h1>
+        <a href="{{ path('recipe.new') }}" class="btn btn-primary mb-4 mt-2">Créer une recette</a>
         {% if not recipes.items is same as ([]) %}
-            <h1>Mes recettes</h1>
+
 
             <a href="{{ path('recipe.new') }}" class="btn btn-primary mb-4 mt-2">Créer une recette</a>
 

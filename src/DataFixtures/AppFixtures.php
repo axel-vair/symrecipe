@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Article;
 use App\Entity\Contact;
 use Faker\Factory;
 use App\Entity\User;
@@ -98,6 +99,21 @@ class AppFixtures extends Fixture
             }
         }
 
+
+
+        for ($j = 0; $j < 25; $j++) {
+            $article = new Article();
+            $article->setTitle($this->faker->title)
+                ->setContent($this->faker->text(10000))
+                ->setUser($user->setFullName('Administrateur de SymRecipe')
+                                ->setPseudo('Admin')
+                                );
+
+            $manager->persist($article);
+        }
+
+
         $manager->flush();
     }
+
 }
