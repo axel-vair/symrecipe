@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+
 class Article
 {
     #[ORM\Id]
@@ -15,6 +18,10 @@ class Article
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank()]
+    private string $slug = '';
 
     #[ORM\Column(length: 10000)]
     private ?string $content = null;
@@ -29,12 +36,19 @@ class Article
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\PrePersist]
+    public function prePersist()
+    {
+       return $this->slug = (new Slugify())->slugify($this->title);
+    }
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->updateAt = new \DateTimeImmutable();
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -48,6 +62,18 @@ class Article
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
@@ -99,4 +125,6 @@ class Article
 
         return $this;
     }
+
+
 }

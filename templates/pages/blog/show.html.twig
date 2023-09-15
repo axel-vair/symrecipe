@@ -10,7 +10,7 @@
         <h1>{{ article.title }}</h1>
         <span class="badge bg-primary">Publié le  {{ article.createdAt|date('d/m/Y') }}</span>
         <span class="badge bg-primary"> Par {{ article.user.pseudo }}</span>
-        <p>{{ article.content }}</p>
+        <p class="mt-4">{{ article.content }}</p>
     </article>
 
 </div>

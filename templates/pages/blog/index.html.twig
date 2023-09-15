@@ -10,10 +10,11 @@
             <p>Aucun article n'a été publié pour le moment.</p>
         {% else %}
             {% for article in articles %}
-                <article>
+                <article class="mt-4">
                     <h2>{{ article.title }}</h2>
-                    <p>{{ article.content|slice(0, 200) }}</p>
-                    <a href="{{ path('show.article', {'id': article.id}) }}">Lire la suite</a>
+                    <span class="badge bg-light">Publié le {{ article.createdAt|date('d/m/Y') }}</span>
+                    <p class="mt-2">{{ article.content|slice(0, 200) }}</p>
+                    <a href="{{ path('show.article', {'slug': article.slug}) }}" class="btn btn-outline-primary">Lire la suite</a>
                 </article>
             {% endfor %}
         {% endif %}
